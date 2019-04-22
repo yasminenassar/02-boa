@@ -228,9 +228,9 @@ labelBind i (Bind x l)     = labelTop i l (Bind x)
 isAnf :: Expr a -> Bool
 isAnf (Number  _ _)    = True
 isAnf (Id      _ _)    = True
-isAnf (Prim1 _ e _)    = isImm e
+isAnf (Prim1 _ e _)    = isAnf e
 isAnf (Prim2 _ e e' _) = isImm e && isImm e'
-isAnf (If c t e _)     = isImm c && isAnf t && isAnf e
+isAnf (If c t e _)     = isAnf c && isAnf t && isAnf e
 isAnf (Let _ e e' _)   = isAnf e && isAnf e'
 
 {-@ measure isImm @-}
