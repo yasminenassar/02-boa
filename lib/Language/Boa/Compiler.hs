@@ -66,7 +66,7 @@ compileEnv env v@(Number {})     = [ compileImm env v  ]
 
 compileEnv env v@(Id {})         = [ compileImm env v  ]
 
-compileEnv env e@(Let {})        = error "TBD:compileEnv:Let"
+compileEnv env e@(Let b e1 e2 l) = error "TBD:compileEnv:Let"
 
 compileEnv env (Prim1 o v l)     = compilePrim1 l env o v
 
