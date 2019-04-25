@@ -38,7 +38,9 @@ anf i (Prim1 o e l)     = (i', Prim1 o e' l)
   where
     (i', e') = anf i e
 
-anf i (Prim2 o e1 e2 l) = error "TBD:anf:prim2"
+anf i (Prim2 o e1 e2 l) = (i', Prim2 )
+  where
+    (i', e') = anf i e1
 
 anf i (If c e1 e2 l)    = (i''', If c' e1' e2' l)
   where
@@ -70,7 +72,7 @@ imms i (e:es)       = (i'', bs' ++ bs, e' : es' )
   where
     (i' , bs , e' ) = imm  i  e
     (i'', bs', es') = imms i' es
-
+anf i e
 --------------------------------------------------------------------------------
 -- | `imm i e` takes as input a "start" counter `i` and expression `e` and
 --   returns an output `(i', bs, e')` where
