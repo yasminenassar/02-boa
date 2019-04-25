@@ -105,7 +105,7 @@ errUnboundVar l x = mkError (printf "Unbound variable %s" x) l
 --------------------------------------------------------------------------------
 -- | Compiling Primitive Operations
 --------------------------------------------------------------------------------
-compilePrim1 :: Tag -> Env -> Prim1 -> IExp -> [Instruction]
+compilePrim1 :: Tag -> Env -> Prim1 -> AExp -> [Instruction]
 compilePrim1 l env Add1 v = error "TBD:compilePrim1:Add1"
 compilePrim1 l env Sub1 v = error "TBD:compilePrim1:Sub1"
 
