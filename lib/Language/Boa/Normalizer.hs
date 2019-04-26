@@ -38,7 +38,7 @@ anf i (Prim1 o e l)     = (i', Prim1 o e' l)
   where
     (i', e') = anf i e
 
-anf i (Prim2 o e1 e2 l) = (i', Prim2 )
+anf i (Prim2 o e1 e2 l) = error "TBD:anf:Prim2"
   where
     (i', e') = anf i e1
 
@@ -72,7 +72,6 @@ imms i (e:es)       = (i'', bs' ++ bs, e' : es' )
   where
     (i' , bs , e' ) = imm  i  e
     (i'', bs', es') = imms i' es
-anf i e
 --------------------------------------------------------------------------------
 -- | `imm i e` takes as input a "start" counter `i` and expression `e` and
 --   returns an output `(i', bs, e')` where
@@ -82,9 +81,9 @@ anf i e
 --------------------------------------------------------------------------------
 imm :: Int -> AnfExpr a -> (Int, Binds a, ImmExpr a)
 --------------------------------------------------------------------------------
-imm i (Number n l)      = error "TBD:imm:Number"
+imm i (Number n l)      = (i, [], Number n l)
 
-imm i (Id x l)          = error "TBD:imm:Id"
+imm i (Id x l)          = (i, [], Id x l)
 
 imm i (Prim1 o e1 l)    = (i'', bs, mkId v l)
   where
@@ -92,7 +91,11 @@ imm i (Prim1 o e1 l)    = (i'', bs, mkId v l)
     (i'', v)            = fresh l i'
     bs                  = (v, (Prim1 o v1 l, l)) : b1s
 
-imm i (Prim2 o e1 e2 l) = error "TBD:imm:prim2"
+imm i (Prim2 o e1 e2 l) = (i''+1, (Bind v l, (Prim2 o v1 v2 l, l)):bs1++bs2, mkId (Bind v l) l)
+  where
+    (i', bs1, v1)       = imm i e1
+    (i'', bs2, v2)      = imm i' e2
+    v                   = "tmp" ++ show i''
 
 imm i e@(If _ _ _  l)   = immExp i e l
 
