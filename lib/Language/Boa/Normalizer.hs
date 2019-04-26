@@ -38,15 +38,21 @@ anf i (Prim1 o e l)     = (i', Prim1 o e' l)
   where
     (i', e') = anf i e
 
-anf i (Prim2 o e1 e2 l) = error "TBD:anf:Prim2"
+anf i (Prim2 o e1 e2 l) = (i'', stitch (bs2++bs1) (Prim2 o v1 v2 l))
   where
-    (i', e') = anf i e1
+    (i', bs1, v1) = imm i e1
+    (i'', bs2, v2) = imm i' e2
 
 anf i (If c e1 e2 l)    = (i''', If c' e1' e2' l)
   where
     (i'  , c')  = anf i   c
     (i'' , e1') = anf i'  e1
     (i''', e2') = anf i'' e2
+
+
+mkLet :: Binds a -> AnfExpr a -> AnfExpr a
+mkLet [] e = e
+mkLet ((b, (e1, a)):bs) e = Let b e1 (mkLet bs e) a  
 
 --------------------------------------------------------------------------------
 -- | `stitch bs e` takes a "context" `bs` which is a list of temp-vars and their
@@ -91,11 +97,11 @@ imm i (Prim1 o e1 l)    = (i'', bs, mkId v l)
     (i'', v)            = fresh l i'
     bs                  = (v, (Prim1 o v1 l, l)) : b1s
 
-imm i (Prim2 o e1 e2 l) = (i''+1, (Bind v l, (Prim2 o v1 v2 l, l)):bs1++bs2, mkId (Bind v l) l)
+imm i (Prim2 o e1 e2 l) = (i''', (newBind, (Prim2 o v1 v2 l, l)):bs2++bs1, mkId newBind l)
   where
     (i', bs1, v1)       = imm i e1
     (i'', bs2, v2)      = imm i' e2
-    v                   = "tmp" ++ show i''
+    (i''', newBind)     = fresh l i''  
 
 imm i e@(If _ _ _  l)   = immExp i e l
 
