@@ -63,7 +63,7 @@ stitch bs e = bindsExpr [ (x, xe) | (x, (xe, _)) <- reverse bs] e (getLabel e)
 --   * `bs` are the temporary binders needed to convert `es` to immediate vals
 --   * `es'` are the immediate values  equivalent to es
 --------------------------------------------------------------------------------
-imms :: Int -> [AnfExpr a] -> (Int, Binds a, [ImmExpr a])
+imms :: Int -> [Expr a] -> (Int, Binds a, [ImmExpr a])
 --------------------------------------------------------------------------------
 imms i []           = (i, [], [])
 imms i (e:es)       = (i'', bs' ++ bs, e' : es' )
@@ -78,17 +78,13 @@ imms i (e:es)       = (i'', bs' ++ bs, e' : es' )
 --   * `bs` are the temporary binders needed to render `e` in ANF, and
 --   * `e'` is an `imm` value (Id or Number) equivalent to `e`.
 --------------------------------------------------------------------------------
-imm :: Int -> AnfExpr a -> (Int, Binds a, ImmExpr a)
+imm :: Int -> Expr a -> (Int, Binds a, ImmExpr a)
 --------------------------------------------------------------------------------
 imm i (Number n l)      = error "TBD:imm:Number"
 
 imm i (Id x l)          = error "TBD:imm:Id"
 
-imm i (Prim1 o e1 l)    = (i'', bs, mkId v l)
-  where
-    (i' , b1s, v1)      = imm i e1
-    (i'', v)            = fresh l i'
-    bs                  = (v, (Prim1 o v1 l, l)) : b1s
+imm i e@(Prim1 _ _ l)   = immExp i e l
 
 imm i (Prim2 o e1 e2 l) = error "TBD:imm:prim2"
 
@@ -97,7 +93,7 @@ imm i e@(If _ _ _  l)   = immExp i e l
 imm i e@(Let _ _ _ l)   = immExp i e l
 
 
-immExp :: Int -> AnfExpr a -> a -> (Int, Binds a, ImmExpr a)
+immExp :: Int -> Expr a -> a -> (Int, Binds a, ImmExpr a)
 immExp i e l  = (i'', bs, mkId v l)
   where
     (i' , e') = anf i e
