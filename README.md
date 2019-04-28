@@ -371,7 +371,7 @@ tackling the implementation:
    the compiler implementation of `Let`.
    Write tests as you go.
 
-## Crafting Good Tests
+## Crafting Good Tests (Extra Credit)
 
 As in the last assignment, we are going to use the tests from your
 `tests/yourTests.json` file to check whether you were able to break any of our N
