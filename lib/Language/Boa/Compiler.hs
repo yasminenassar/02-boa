@@ -121,6 +121,7 @@ compilePrim1 :: Tag -> Env -> Prim1 -> AExp -> [Instruction]
 compilePrim1 l env Add1 v = (compileEnv env v) ++ [IAdd (Reg EAX) (Const 1)]
 compilePrim1 l env Sub1 v = (compileEnv env v) ++ [ISub (Reg EAX) (Const 1)]
 
+
 compilePrim2 :: Tag -> Env -> Prim2 -> IExp -> IExp -> [Instruction]
 compilePrim2 l env Plus  v1 v2 = error "TBD:compilePrim2:Plus"
 compilePrim2 l env Minus v1 v2 = error "TBD:compilePrim2:Minus"
