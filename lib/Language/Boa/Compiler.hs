@@ -123,10 +123,12 @@ compilePrim1 l env Sub1 v = (compileEnv env v) ++ [ISub (Reg EAX) (Const 1)]
 
 
 compilePrim2 :: Tag -> Env -> Prim2 -> IExp -> IExp -> [Instruction]
-compilePrim2 l env Plus  v1 v2 = error "TBD:compilePrim2:Plus"
-compilePrim2 l env Minus v1 v2 = error "TBD:compilePrim2:Minus"
-compilePrim2 l env Times v1 v2 = error "TBD:compilePrim2:Times"
-
+compilePrim2 l env Plus  v1 v2 = [compileImm env v1, 
+                                 IAdd (Reg EAX) (immArg env v2)] 
+compilePrim2 l env Minus v1 v2 = [compileImm env v1, 
+                                 ISub (Reg EAX) (immArg env v2)]  
+compilePrim2 l env Times v1 v2 = [compileImm env v1, 
+                                 IMul (Reg EAX) (immArg env v2)]  
 --------------------------------------------------------------------------------
 -- | Local Variables
 --------------------------------------------------------------------------------

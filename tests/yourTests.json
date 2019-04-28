@@ -4,5 +4,10 @@
     "name"   : "if-0",
     "code"   : "file",
     "result" : { "value": "10" }
+  },
+  {
+    "name"   : "prim2-plus",
+    "code"   : "file",
+    "result" : { "value": "14" }
   }
 ]
