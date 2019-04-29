@@ -1,0 +1,10 @@
+(
+let x = 138783 in 
+    ((let x = x in 
+        x + 10) - 50)) + 
+(let x = 40 in 
+(if x: 
+  x*(x+x)
+ else:
+   (x-x)*x
+))

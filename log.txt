@@ -1,0 +1,4 @@
+nasm -f elf32 -o tests/output/test2.o tests/output/test2.s
+clang -g -m32 -o tests/output/test2.run c-bits/main.c tests/output/test2.o
+./limit.sh 5 500 50 tests/output/test2.run > tests/output/test2.result
+rm tests/output/test2.run tests/output/test2.o

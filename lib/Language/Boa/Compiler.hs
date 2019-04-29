@@ -66,7 +66,12 @@ compileEnv env v@(Number {})     = [ compileImm env v  ]
 
 compileEnv env v@(Id {})         = [ compileImm env v  ]
 
-compileEnv env e@(Let b e1 e2 l) = error "TBD:compileEnv:Let"
+compileEnv env e@(Let b e1 e2 l) = compileEnv env e1 ++
+                                   [IMov (regOffset) (Reg EAX)] ++
+                                   compileEnv env' e2
+               where
+                  (i, env') = pushEnv b env
+                  regOffset = stackVar i 
 
 compileEnv env (Prim1 o v l)     = compilePrim1 l env o v
 

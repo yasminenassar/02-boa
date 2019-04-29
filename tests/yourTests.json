@@ -9,5 +9,47 @@
     "name"   : "prim2-plus",
     "code"   : "file",
     "result" : { "value": "14" }
+  },
+  {
+    "name"   : "simpleLet",
+    "code"   : "file",
+    "result" : { "value": "10" }
+  },
+  {
+    "name"   : "complex",
+    "code"   : "file",
+    "result" : { "value": "192" }
+  },
+  {
+    "name"   : "prim1_let_basic",
+    "code"   : "file",
+    "result" : { "value": "8" }
+  },
+  {
+    "name"   : "shadowing_basic",
+    "code"   : "file",
+    "result" : { "value": "11" }
+  },
+  {
+    "name"   : "unbound_var",
+    "code"   : "file",
+    "result" : { "failure": "Unbound variable y" }
+  },
+   {
+    "name"   : "pls",
+    "code"   : "file",
+    "result" : { "value": "(let anf1 = (let x = 138783, anf0 = (let x = x in x + 10) in anf0 - 50), anf4 = (let x = 40 in (if x: (let anf2 = x + x in x * anf2) else: (let anf3 = x - x in anf3 * x))) in anf1 + anf4)" 
+          },
+    "anf"    : true
+  },
+  {
+    "name"   : "test",
+    "code"   : "file",
+    "result" : { "value": "141943" }
+  },
+  {
+    "name"   : "test2",
+    "code"   : "file",
+    "result" : { "value": "141943" }
   }
 ]

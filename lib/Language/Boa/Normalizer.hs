@@ -32,7 +32,10 @@ anf i (Number n l)      = (i, Number n l)
 
 anf i (Id     x l)      = (i, Id     x l)
 
-anf i (Let x e b l)     = error "TBD:anf:let"
+anf i (Let x e b l)     = (i2, Let x e1 e2 l)
+  where
+    (i1, e1)            = anf i e
+    (i2, e2)            = anf i1 b
 
 anf i (Prim1 o e l)     = (i', Prim1 o e' l)
   where

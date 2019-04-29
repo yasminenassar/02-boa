@@ -1,0 +1,7 @@
+let x = (let x = 6 in add1(x + x)) in 
+      (x*x + 
+        (if ((x*x)-169): 
+          x 
+         else: 
+          x+10)
+      )
